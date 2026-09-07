@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LegajoAsignatura{% endblock %}
+
+{% block body %}
+    <h1>LegajoAsignatura</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ legajo_asignatura.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_legajo_asignatura_index') }}">back to list</a>
+
+    <a href="{{ path('app_legajo_asignatura_edit', {'id': legajo_asignatura.id}) }}">edit</a>
+
+    {{ include('legajo_asignatura/_delete_form.html.twig') }}
+{% endblock %}

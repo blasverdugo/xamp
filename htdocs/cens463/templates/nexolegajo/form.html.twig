@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion Estudiante{% endblock %}
+
+{% block body %}
+    <style>
+
+        [id^="nexo_legajo_"]{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(270px,0.1fr));
+            gap:1rem;
+        }
+
+        [id^="nexo_legajo_"] > div{
+            display:flex;
+            flex-direction:column;
+            min-width:0;
+        }
+        
+        .form_container{
+            width:min(92%,1920px);
+            margin:auto;
+            padding:1rem;
+        }
+        
+        .form_container input,.form_container select {
+            width: 250px;
+            max-width:250;
+
+        }
+    </style>
+
+
+
+    <a href="{{ path('app_nexolegajo') }}" class="boton">Volver a la lista</a>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <h1>Legajo</h1>
+    {{ form_start(form) }}
+        <div class="form_container">
+            <hr>
+            <div class="form_rod">
+                <div id="nexo_legajo_legajo">
+                    <div>{{ form_row(form.estudiante.apellido) }}</div>
+                    <div>{{ form_row(form.estudiante.nombre) }}</div>
+                    <div>{{ form_row(form.estudiante.dni) }}</div>
+                    <div>{{ form_row(form.estudiante.fecha) }}</div>
+                    <div>{{ form_row(form.estudiante.localidad) }}</div>
+                    <div>{{ form_row(form.estudiante.nacionalidad) }}</div>
+                    <div>{{ form_row(form.estudiante.genero) }}</div>
+                </div>
+            </div>
+
+
+            <hr>
+            <div class="form_rod">
+            <div id="nexo_legajo_legajo">
+                {{ form_row(form.legajo.anio) }}
+                {{ form_row(form.legajo.fecha) }}
+                {{ form_row(form.legajo.turno) }}
+
+                <div>
+                    {{ form_label(form.legajo.institucion) }}
+                    {{ form_errors(form.legajo.institucion) }}
+                    {{ form_widget(form.legajo.institucion, {
+                        attr: {
+                            'data-selected': form.legajo.institucion.vars.value
+                        }
+                    }) }}
+                </div>
+
+                <div>
+                    {{ form_label(form.legajo.resolucion) }}
+                    {{ form_errors(form.legajo.resolucion) }}
+                    {{ form_widget(form.legajo.resolucion, {
+                        attr: {
+                            'data-selected': form.legajo.resolucion.vars.data ? form.legajo.resolucion.vars.data.id : ''
+                        }
+                    }) }}
+                </div>
+
+                <div>
+                    {{ form_label(form.legajo.ciclo) }}
+                    {{ form_errors(form.legajo.ciclo) }}
+                    {{ form_widget(form.legajo.ciclo, {
+                        attr: {
+                            'data-selected': form.legajo.ciclo.vars.data ? form.legajo.ciclo.vars.data.id : ''
+                        }
+                    }) }}
+                </div>
+
+            </div>
+            </div>
+            <hr>
+
+
+            <button type="button" id="toggle-ll" class="boton">➕ Documentacion </button>
+            <div id="ll-container" style="display:none; margin-top: 10px;" class="formularioll">
+                {{ form_row(form.libroLegajo) }}
+
+            </div>
+            <hr>
+
+
+            <button type="button" id="toggle-estudio-primario" class="boton">➕ Estudio Primario </button>
+            <div id="estudio-primario-container" style="display:none; margin-top: 10px;" class="formularioEstudiante">
+                {{ form_row(form.estudioPrimario) }}
+            </div>
+            <hr>
+
+
+            <button type="button" id="toggle-estudio-secundario" class="boton">➕ Estudio Secundario </button>
+            <div id="estudio-secundario-container" style="display:none; margin-top: 10px;" class="formularioEstudiante">
+                {{ form_row(form.estudioSecundario) }}
+            </div>
+            <hr>
+
+
+            <button type="submit" class="boton">Guardar</button>
+        </div>
+    {{ form_end(form) }}
+
+    <script>
+        document.getElementById('toggle-estudio-primario').addEventListener('click', function() {
+            const cont = document.getElementById('estudio-primario-container');
+            cont.style.display = (cont.style.display === 'none' || cont.style.display === '') ? 'grid' : 'none';
+        });
+
+        document.getElementById('toggle-estudio-secundario').addEventListener('click', function() {
+            const cont = document.getElementById('estudio-secundario-container');
+            cont.style.display = (cont.style.display === 'none' || cont.style.display === '') ? 'grid' : 'none';
+        });
+        document.getElementById('toggle-ll').addEventListener('click', function() {
+            const cont = document.getElementById('ll-container');
+            cont.style.display = (cont.style.display === 'none' || cont.style.display === '') ? 'grid' : 'none';
+        });
+
+        const rutaResoluciones = "{{ path('ajax_resoluciones', {'id': 0}) }}";
+        const rutaCiclos = "{{ path('ajax_ciclos', {'id': 0}) }}";
+
+        const institucion = document.getElementById('nexo_legajo_legajo_institucion');
+        const resolucion = document.getElementById('nexo_legajo_legajo_resolucion');
+        const ciclo = document.getElementById('nexo_legajo_legajo_ciclo');
+
+
+        async function cargarResoluciones(idInstitucion) {
+            resolucion.innerHTML = '<option value="">-- Seleccione una resolución --</option>';
+            ciclo.innerHTML = '<option value="">-- Seleccione un ciclo --</option>';
+            if (!idInstitucion) return;
+            const response = await fetch(rutaResoluciones.replace('/0', '/' + idInstitucion));
+            if (!response.ok) return;
+            const datos = await response.json();
+            datos.forEach(r => {
+                resolucion.add(new Option(r.numero, r.id));
+            });
+        }
+
+        async function cargarCiclos(idResolucion) {
+            ciclo.innerHTML = '<option value="">-- Seleccione un ciclo --</option>';
+            if (!idResolucion) return;
+            const response = await fetch(rutaCiclos.replace('/0', '/' + idResolucion));
+            if (!response.ok) return;
+            const datos = await response.json();
+            datos.forEach(c => {
+                ciclo.add(new Option(c.nombre, c.id));
+            });
+        }
+
+        institucion.addEventListener('change', function () {
+            cargarResoluciones(this.value);
+        });
+
+        resolucion.addEventListener('change', function () {
+            cargarCiclos(this.value);
+        });
+
+        (async function () {
+            if (institucion.value) {
+                await cargarResoluciones(institucion.value);
+                resolucion.value = resolucion.dataset.selected;
+                await cargarCiclos(resolucion.value);
+                ciclo.value = ciclo.dataset.selected;
+            }
+
+        })();
+
+    </script>
+
+{% endblock %}

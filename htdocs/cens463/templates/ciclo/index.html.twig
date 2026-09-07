@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ciclo index{% endblock %}
+
+{% block body %}
+    <h1>Ciclo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Nombre</th>
+                <th>Resolucion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ciclo in ciclos %}
+            <tr>
+                <td>{{ ciclo.id }}</td>
+                <td>{{ ciclo.tipo }}</td>
+                <td>{{ ciclo.nombre }}</td>
+                <td>{{ ciclo.resolucion.numero }}</td>
+                <td>
+                    <a href="{{ path('app_ciclo_show', {'id': ciclo.id}) }}">show</a>
+                    <a href="{{ path('app_ciclo_edit', {'id': ciclo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ciclo_new') }}">Create new</a>
+{% endblock %}

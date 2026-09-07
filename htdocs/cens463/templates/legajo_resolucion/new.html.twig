@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LegajoResolucion{% endblock %}
+
+{% block body %}
+    <h1>Create new LegajoResolucion</h1>
+
+    {{ include('legajo_resolucion/_form.html.twig') }}
+
+    <a href="{{ path('app_legajo_resolucion_index') }}">back to list</a>
+{% endblock %}

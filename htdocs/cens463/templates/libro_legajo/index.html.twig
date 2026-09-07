@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LibroLegajo index{% endblock %}
+
+{% block body %}
+    <h1>LibroLegajo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tomo</th>
+                <th>Folio</th>
+                <th>Partida</th>
+                <th>Dni</th>
+                <th>TituloPrimario</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for libro_legajo in libro_legajos %}
+            <tr>
+                <td>{{ libro_legajo.id }}</td>
+                <td>{{ libro_legajo.tomo }}</td>
+                <td>{{ libro_legajo.folio }}</td>
+                <td>{{ libro_legajo.partida ? 'Yes' : 'No' }}</td>
+                <td>{{ libro_legajo.dni ? 'Yes' : 'No' }}</td>
+                <td>{{ libro_legajo.tituloPrimario ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_libro_legajo_show', {'id': libro_legajo.id}) }}">show</a>
+                    <a href="{{ path('app_libro_legajo_edit', {'id': libro_legajo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_libro_legajo_new') }}">Create new</a>
+{% endblock %}

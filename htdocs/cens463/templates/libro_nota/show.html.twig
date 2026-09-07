@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LibroNota{% endblock %}
+
+{% block body %}
+    <h1>LibroNota</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ libro_notum.id }}</td>
+            </tr>
+            <tr>
+                <th>Nota</th>
+                <td>{{ libro_notum.nota }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ libro_notum.fecha ? libro_notum.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Tomo</th>
+                <td>{{ libro_notum.tomo }}</td>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <td>{{ libro_notum.folio }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ libro_notum.observaciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_libro_nota_index') }}">back to list</a>
+
+    <a href="{{ path('app_libro_nota_edit', {'id': libro_notum.id}) }}">edit</a>
+
+    {{ include('libro_nota/_delete_form.html.twig') }}
+{% endblock %}

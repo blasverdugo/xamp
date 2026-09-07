@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LibroNota index{% endblock %}
+
+{% block body %}
+    <h1>LibroNota index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nota</th>
+                <th>Fecha</th>
+                <th>Tomo</th>
+                <th>Folio</th>
+                <th>Observaciones</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for libro_notum in libro_notas %}
+            <tr>
+                <td>{{ libro_notum.id }}</td>
+                <td>{{ libro_notum.nota }}</td>
+                <td>{{ libro_notum.fecha ? libro_notum.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ libro_notum.tomo }}</td>
+                <td>{{ libro_notum.folio }}</td>
+                <td>{{ libro_notum.observaciones }}</td>
+                <td>
+                    <a href="{{ path('app_libro_nota_show', {'id': libro_notum.id}) }}">show</a>
+                    <a href="{{ path('app_libro_nota_edit', {'id': libro_notum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_libro_nota_new') }}">Create new</a>
+{% endblock %}

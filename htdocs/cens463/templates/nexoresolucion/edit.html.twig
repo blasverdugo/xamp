@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar CENS{% endblock %}
+
+{% block body %}
+    <div class="formulario1">
+        {{ form_start(form) }}
+            <h1 class="centrado">Editar CENS:{{ cens.numeroresolucion }}</h1>
+            <h1 class="centrado">Convenio:{{ cens.numeroConvenio }}</h1>
+            <h1 class="centrado">Institucion:{{ cens.institucion }}</h1>
+            <div style="display: none;">
+                <h3 id="nuevo-cens-label">O crear uno nuevo</h3>
+                <div id="nuevo-cens-wrapper" class="centrado">
+                    <div class="form_cens">
+                        <div>{{ form_row(form.nuevoCens.numero_resolucion) }}</div>
+                        <div>{{ form_row(form.nuevoCens.numero_convenio) }}</div>
+                        <div>{{form_row(form.nuevoCens.institucion)}}</div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h1 class="centrado">Materias</h1>
+            <hr>
+            <div id="materias-wrapper" data-prototype="{{ form_widget(form.materias.vars.prototype)|e('html_attr') }}">
+                <div >
+                    {% for materia in form.materias %}
+                        <div class="itemX">
+                            {{form_row(materia.nombre)}}
+                            {{form_row(materia.anio)}}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="button" id="add-materia" class="boton">➕ Agregar materia</button>
+            <br><br>
+            <button type="submit" class="boton">Guardar</button>
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        let materiaIndex = {{ cens.materias|length }};
+        document.getElementById('add-materia').addEventListener('click', function() {
+            const list = document.querySelector('#materias-wrapper');
+            let prototype = list.dataset.prototype.replace(/__name__/g, materiaIndex);
+            prototype = `
+                <div class="materia-item itemX">
+                    ${prototype}
+                    <button type="button" class="remove-materia boton">❌ Eliminar</button>
+                </div>
+            `;
+            list.insertAdjacentHTML('beforeend', prototype);
+            materiaIndex++; // Incrementar para la próxima materia nueva
+        });
+
+        // Eliminar materia
+        document.querySelector('#materias-wrapper').addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-materia')) {
+                e.target.closest('.materia-item').remove();
+            }
+        });
+    </script>
+{% endblock %}

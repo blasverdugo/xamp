@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EstudioSecundario{% endblock %}
+
+{% block body %}
+    <h1>EstudioSecundario</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ estudio_secundario.id }}</td>
+            </tr>
+            <tr>
+                <th>Tomo</th>
+                <td>{{ estudio_secundario.tomo }}</td>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <td>{{ estudio_secundario.folio }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ estudio_secundario.fecha ? estudio_secundario.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ estudio_secundario.tipo }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ estudio_secundario.numero }}</td>
+            </tr>
+            <tr>
+                <th>Localidad</th>
+                <td>{{ estudio_secundario.localidad }}</td>
+            </tr>
+            <tr>
+                <th>AnioCompleto</th>
+                <td>{{ estudio_secundario.anioCompleto }}</td>
+            </tr>
+            <tr>
+                <th>PlanEstudio</th>
+                <td>{{ estudio_secundario.planEstudio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_estudio_secundario_index') }}">back to list</a>
+
+    <a href="{{ path('app_estudio_secundario_edit', {'id': estudio_secundario.id}) }}">edit</a>
+
+    {{ include('estudio_secundario/_delete_form.html.twig') }}
+{% endblock %}

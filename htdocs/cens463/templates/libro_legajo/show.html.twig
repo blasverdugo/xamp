@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LibroLegajo{% endblock %}
+
+{% block body %}
+    <h1>LibroLegajo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ libro_legajo.id }}</td>
+            </tr>
+            <tr>
+                <th>Tomo</th>
+                <td>{{ libro_legajo.tomo }}</td>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <td>{{ libro_legajo.folio }}</td>
+            </tr>
+            <tr>
+                <th>Partida</th>
+                <td>{{ libro_legajo.partida ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Dni</th>
+                <td>{{ libro_legajo.dni ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>TituloPrimario</th>
+                <td>{{ libro_legajo.tituloPrimario ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_libro_legajo_index') }}">back to list</a>
+
+    <a href="{{ path('app_libro_legajo_edit', {'id': libro_legajo.id}) }}">edit</a>
+
+    {{ include('libro_legajo/_delete_form.html.twig') }}
+{% endblock %}

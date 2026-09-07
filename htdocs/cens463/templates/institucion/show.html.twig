@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Institucion{% endblock %}
+
+{% block body %}
+    <h1>Institucion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ institucion.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ institucion.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ institucion.numero }}</td>
+            </tr>
+            <tr>
+                <th>Cue</th>
+                <td>{{ institucion.cue }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ institucion.fecha ? institucion.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ institucion.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_institucion_index') }}">back to list</a>
+
+    <a href="{{ path('app_institucion_edit', {'id': institucion.id}) }}">edit</a>
+
+    {{ include('institucion/_delete_form.html.twig') }}
+{% endblock %}

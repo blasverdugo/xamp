@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LibroMatriz index{% endblock %}
+
+{% block body %}
+    <h1>LibroMatriz index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Tomo</th>
+                <th>Folio</th>
+                <th>Observaciones</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for libro_matriz in libro_matrizs %}
+            <tr>
+                <td>{{ libro_matriz.id }}</td>
+                <td>{{ libro_matriz.fecha ? libro_matriz.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ libro_matriz.tomo }}</td>
+                <td>{{ libro_matriz.folio }}</td>
+                <td>{{ libro_matriz.observaciones }}</td>
+                <td>
+                    <a href="{{ path('app_libro_matriz_show', {'id': libro_matriz.id}) }}">show</a>
+                    <a href="{{ path('app_libro_matriz_edit', {'id': libro_matriz.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_libro_matriz_new') }}">Create new</a>
+{% endblock %}

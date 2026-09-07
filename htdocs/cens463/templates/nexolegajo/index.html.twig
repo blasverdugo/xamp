@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <h1>Buscar Estudiante por DNI</h1>
+
+    <form method="get" action="{{ path('app_nexolegajo') }}">
+        <input type="text" name="dni" placeholder="DNI" value="{{ dni|default('') }}">
+        <button type="submit" class="boton">Buscar</button>
+    </form>
+    
+    <a href="{{ path('nexo_legajo_new') }}" class="boton">Crear Estudiante</a>
+
+    {% if estudiantes is not empty %}
+        <h2>Resultados de búsqueda</h2>
+        <table class="tabla_estudiantes">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estudiante in estudiantes %}
+                    <tr>
+                        <td>{{ estudiante.nombre }}</td>
+                        <td>{{ estudiante.dni }}</td>
+                        <td>
+                            <a href="{{ path('nexo_legajo_edit', {id: estudiante.id}) }}" class="boton">Editar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elseif dni is defined %}
+        <p>No se encontraron estudiantes con DNI "{{ dni }}"</p>
+    {% endif %}
+
+{% endblock %}

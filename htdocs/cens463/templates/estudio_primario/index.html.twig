@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EstudioPrimario index{% endblock %}
+
+{% block body %}
+    <h1>EstudioPrimario index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Localidad</th>
+                <th>AnioFinalizado</th>
+                <th>Egreso</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estudio_primario in estudio_primarios %}
+            <tr>
+                <td>{{ estudio_primario.id }}</td>
+                <td>{{ estudio_primario.numero }}</td>
+                <td>{{ estudio_primario.localidad }}</td>
+                <td>{{ estudio_primario.anioFinalizado }}</td>
+                <td>{{ estudio_primario.egreso }}</td>
+                <td>
+                    <a href="{{ path('app_estudio_primario_show', {'id': estudio_primario.id}) }}">show</a>
+                    <a href="{{ path('app_estudio_primario_edit', {'id': estudio_primario.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_estudio_primario_new') }}">Create new</a>
+{% endblock %}

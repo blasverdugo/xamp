@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LegajoResolucion{% endblock %}
+
+{% block body %}
+    <h1>LegajoResolucion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ legajo_resolucion.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ legajo_resolucion.fecha ? legajo_resolucion.fecha|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_legajo_resolucion_index') }}">back to list</a>
+
+    <a href="{{ path('app_legajo_resolucion_edit', {'id': legajo_resolucion.id}) }}">edit</a>
+
+    {{ include('legajo_resolucion/_delete_form.html.twig') }}
+{% endblock %}

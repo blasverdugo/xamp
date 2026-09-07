@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestión de Materias{% endblock %}
+
+{% block body %}
+    <div class="formulario1">
+        {{ form_start(form) }}
+
+            <h1 id="nuevo-cens-label" class="centrado">Crear CENS</h1>
+            <div id="nuevo-cens-wrapper" class="centrado">
+                <div class="form_cens">
+                    <div>{{ form_row(form.nuevoCens.numero_resolucion) }}</div>
+                    <div>{{ form_row(form.nuevoCens.numero_convenio) }}</div>
+                    <div>{{form_row(form.nuevoCens.institucion)}}</div>
+                </div>
+            </div>
+            <hr>
+            <h1 class="centrado">Materias</h1>
+            <hr>
+            <div id="materias-wrapper" data-prototype="{{ form_widget(form.materias.vars.prototype)|e('html_attr') }}">
+                {{ form_widget(form.materias) }}
+            </div>
+            <button type="button" id="add-materia" class="boton">➕ Agregar materia</button>
+
+            <br><br>
+            <button type="submit" class="boton">Guardar</button>
+
+        {{ form_end(form) }}
+    <div>
+    <script>
+        // Botón para agregar materias
+        document.getElementById('add-materia').addEventListener('click', function() {
+            const list = document.querySelector('#materias-wrapper');
+            let prototype = list.dataset.prototype.replace(/__name__/g, list.children.length);
+            prototype = `
+                <div class="materia-item itemX">
+                    ${prototype}
+                    <button type="button" class="remove-materia boton">❌ Eliminar</button>
+                    
+                </div>
+            `;
+            // Agregar el <hr> después del contenido del prototipo
+            //prototype = `<div class="materia-item item">${prototype}<hr></div>`;
+            list.insertAdjacentHTML('beforeend', prototype);
+        });
+        document.querySelector('#materias-wrapper').addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-materia')) {
+                e.target.closest('.materia-item').remove();
+            }
+        });
+        // --- Control de visibilidad ---
+        const nuevoCensWrapper = document.getElementById('nuevo-cens-wrapper');
+        const nuevoCensInputs = nuevoCensWrapper.querySelectorAll('input, select, textarea');
+
+        const nuevoCensContainer = document.querySelector('#{{ form.nuevoCens.vars.id|default("") }}') 
+            || nuevoCensWrapper; // fallback
+
+
+    </script>
+{% endblock %}

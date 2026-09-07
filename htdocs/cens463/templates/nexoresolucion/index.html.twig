@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion de Cens{% endblock %}
+
+{% block body %}
+    <h1>Gestion de Cens y sus Materias</h1>
+
+    <input id="filtro-cens" type="text" placeholder="Buscar por número de resolución" style="margin-bottom:1rem; padding:0.5rem; width: 300px;" />
+
+   <a class="boton" >Crear nuevas materias / cens</a> 
+
+    <table class="table" id="tabla-cens">
+        <thead>
+            <tr>
+                <th>Numero de resolucion</th>
+                <th>---</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for resolucion in resoluciones %}
+            <tr>
+                <td class="numero-resolucion">{{ resolucion.numero }}</td>
+                <td>
+                    <a class="boton" >Editar</a> 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">Sin DATOS</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('filtro-cens').addEventListener('input', function() {
+            const filtro = this.value.toLowerCase();
+            const filas = document.querySelectorAll('#tabla-cens tbody tr');
+            filas.forEach(fila => {
+                const numRes = fila.querySelector('.numero-resolucion').textContent.toLowerCase();
+                if (numRes.includes(filtro)) {
+                    fila.style.display = '';
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+        });
+    </script>
+{% endblock %}

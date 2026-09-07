@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resolucion{% endblock %}
+
+{% block body %}
+    <h1>Resolucion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ resolucion.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ resolucion.numero }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_resolucion_index') }}">back to list</a>
+
+    <a href="{{ path('app_resolucion_edit', {'id': resolucion.id}) }}">edit</a>
+
+    {{ include('resolucion/_delete_form.html.twig') }}
+{% endblock %}

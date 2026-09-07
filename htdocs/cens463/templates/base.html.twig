@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}profe rodriguez gustavo{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        <style>
+
+            label {
+                font-size:25px;
+                width:200px;
+                display:flex;    
+            }
+
+            body{
+                width: 100vw;
+                height: 100vh;
+                top:0;
+                border:0;
+                padding:0;
+                background-color: rgba(97, 97, 95, 0.9);
+            }
+            table {
+                width: 98%;
+                border-radius:8px;
+                border-collapse: collapse;
+                margin: 20px 0;
+                border: 2px solid black; /* Borde alrededor de toda la tabla */
+            }
+
+            td, th {
+                border: 1px solid black; /* Línea divisoria negra entre celdas */
+                padding: 10px;
+                text-align: left;
+            }
+
+            th {
+                background-color:rgba(182, 218, 248, 1);
+                font-weight: bold;
+            }
+
+            tr:nth-child(even) {
+                background-color:rgb(200, 200, 200);
+            }
+
+            tr:hover {
+                background-color: rgb(255, 255, 255);
+            }
+            @media screen and (max-width: 768px) {
+                table, thead, tbody, th, td, tr {
+                    display: block;
+                }
+
+                thead {
+                    display: none;
+                }
+
+                tr {
+                    margin-bottom: 15px;
+                }
+
+                td {
+                    padding-left: 50%;
+                    position: relative;
+                }
+
+                td::before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 15px;
+                    font-weight: bold;
+                }
+            }
+
+            /*menu desplegable*/
+            .sidebar {
+                margin-top: 0px;
+                position: fixed;
+                top: 0;
+                left: -25px;
+                background:linear-gradient(180deg, #aabeebff, #3d72ddff);
+                color: white;
+                height: 100vh;
+                overflow-x: hidden;
+                transition: width 0.6s ease;
+                z-index: 1000;
+                width: 55px;
+                transition: width 1.1s ease;
+                flex-shrink: 0;
+            }
+
+            .sidebar.collapsed {
+                width: 40px;
+            }
+
+
+
+            /* Oculta los textos y muestra solo emojis en modo colapsado */
+            .sidebar.collapsed .text {
+                opacity: 0;
+                visibility: hidden;
+                display: none;
+                transition: opacity 0.4s ease;
+            }
+
+
+
+            /* Ícono de menú hamburguesa visible siempre */
+            .menu-icon {
+                display: inline-block;
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+            }
+
+            /* Links */
+            .link {
+                display: flex;
+                align-items: center;
+                gap: 0.2rem;
+                padding: 0.2rem;
+                text-decoration: none;
+                color: white;
+                border-radius: 0.25rem;
+                transition: background-color 0.2s ease-in-out;
+            }
+
+            .link:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            /* Sublinks */
+            .sublink {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.25rem 1.5rem;
+                color: white;
+                text-decoration: none;
+                font-size: 0.9rem;
+            }
+
+            .sublink:hover {
+                background-color: rgba(255, 255, 255, 0.3);
+                border-radius: 0.25rem;
+            }
+
+            .brand {
+                text-align: center;
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+
+            .text{
+                color: black;
+                font-size: 20px;
+            }
+            .layout-wrapper {
+                display: flex;
+                transition: all 1.1s ease;
+            }
+
+            /*.sidebar:hover {
+                width: 180px;
+            }*/
+
+            #page-content {
+                width: 100%;
+                height: 100%;
+                flex-grow: 1;
+                transition: margin-left 1.1s ease;
+                margin-left: 55px;
+            }
+
+           /* .sidebar:hover + #page-content {
+                margin-left: 195px;
+            }*/
+            .layout-wrapper {
+                display: flex;
+                transition: all 1.1s ease;
+            }
+            .collapse {
+                display: none;
+                transition: all 1.1s ease;
+            }
+
+            .collapse.show {
+                display: block;
+            }
+            .logo {
+                display: flex;
+                justify-content: center; 
+                align-items: center;    
+            }
+
+            .logo img {
+                max-width: 50%; 
+                height: auto;
+                border-radius: 0.5rem;
+                margin-left:-7px;
+            }            
+            .logo2 {
+                text-align: center;
+            }
+            .logo2 img {
+                width: 100vw;   
+                height: 100vh;  
+                object-fit: cover;  
+                display: block;
+                border-radius: 0; 
+            }
+
+            .toggle-button {
+                top: 20px;
+                margin-left: -7px;
+                z-index: 1100;
+                background-color:rgb(142, 137, 118);
+                border: none;
+                font-size: 1.2rem;
+                padding: 0.5rem;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .toggle-button:hover, .link:hover{
+                background-color: grey; 
+                transition: all 1.1s ease-in-out;
+            }
+
+
+
+
+
+            .sidebar:not(.collapsed) {
+                width: 170px;
+            }
+
+            .sidebar:not(.collapsed) .text {
+                opacity: 1;
+                visibility: visible;
+                display: inline;
+            }
+
+            #page-content {
+                width: 89vw;
+                transition: margin-left 1.1s ease;
+                margin-left: 55px;
+                
+            }
+
+            .sidebar:not(.collapsed) ~ #page-content {
+                margin-left: 180px;
+            }
+
+
+            .registrop{
+                width: 100vw;
+                font-size: 30px;
+            }
+
+        
+            .bi-person {
+                margin-left:-2px;
+            }
+            #textp {
+                margin-left:-5px;
+            }
+
+
+            .home-div {
+                justify-content: center;
+                max-width: 500px;
+                border-collapse: collapse;
+                margin: 0 auto;
+                background-color:rgb(253, 250, 240);;
+                box-shadow: 0 0 10px 5px rgb(82, 59, 59, 0.7); 
+                border-radius: 5px;
+                height: 500px;
+            }
+            .home-div form {
+                margin-left:165px;
+                justify-content: center;
+            }
+
+            
+
+            .home-div h1 {
+                display:flex;
+                justify-content: center;
+                color:black;
+            }
+            .home-input td{
+                color:black;
+            }
+
+
+            .home-input:invalid {
+                border: 2px solid red;
+            }
+            
+            .home-input:valid {
+                border: 2px solid rgb(139, 139, 198);
+            }
+
+
+            .uno {
+                margin-left:120px;
+                margin-top:16px;
+                background-color: rgb(205, 111, 111);
+            }
+            .uno:hover{
+                background-color: rgb(202, 83, 83);
+            }
+            .botonera {
+                margin-top:10px;
+            }
+
+            
+            .botones {
+                background: white;
+                border: 2px solid #21d1ddff;
+                color: black;
+                padding: 0.5em 1.2em;
+                font-size: 1rem;
+                font-weight: 600;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.6s ease;
+                text-decoration: none;/*quitamos la decoracion en los enlaces*/
+            }
+            .botones:hover {
+                background: #209de5ff;
+                color: black;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
+            }
+
+            .botones:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(23, 167, 219, 0.5);
+            }
+            
+            td img {
+               width: 80px;
+            }
+            .formulario{
+                display: flex;
+                justify-content: center;
+            }
+            .subform {    
+                background-color:rgba(255, 255, 255, 0.8);
+                height: 99vh;
+                width: 20vw;
+                border-radius: 10px;
+            }
+            .subform form, .subform h1 {    
+                margin-left:10%;
+            }
+            .modal{
+                display:flex;
+                justify-content:center;
+                background-color:rgba(0,0,0,0.8);
+                width:100%;
+                height:70vh;
+                color:white;
+                border-radius:10px;
+            }
+        </style>
+    </head>
+    <body id="page-top">
+        <div class="layout-wrapper">
+            <ul class="sidebar" id="sidebar">
+                <div class="brand d-flex align-items-center justify-content-center" id="sierra">
+                    <span class="menu-icon">🏠</span>
+                    <span class="text">CENS463</span>
+                </div>
+
+                <div class="item">
+                    <a class="link" href="{{ path('app_inicio') }}">
+                        🏠<span class="text">Inicio</span>
+                    </a>
+                </div>
+
+
+                <div class="item">
+                    <a class="link" data-toggle="collapse" href="#menuPersonas">
+                    👥<span class="text">Usuarios</span>
+                    </a>
+                    <div id="menuPersonas" class="collapse">
+                        {% if is_granted ('ROLE_SUPER_ADMIN')  %}
+                        <a class="sublink" href="{{ path('app_admin_index') }}">📋<span class="text">Usuarios</span></a>
+                        {% endif %} 
+                    </div>
+                </div>
+                
+                <div class="logo">
+                    <img src="{{ asset('img/logo.jpg') }}" alt="Logo" class="img-fluid">
+                <!--    <p class="text">Bienvenidos<br>empresa</p> -->
+                </div>
+                <div class="item">
+                    <a class="link" href="{{ path('app_nexoresolucion') }}">
+                        ​🎬​<span class="text">Resoluciones</span>
+                    </a>
+                </div>
+               
+                <div class="item">
+                    <a class="link" href="{{ path('app_inicio') }}">
+                        ​🎬​<span class="text">Inicio</span>
+                    </a>
+                </div>
+                <div class="item">
+                    <a class="link" href="{{ path('app_nexolegajo') }}">
+                        ​🎬​<span class="text">Legajos</span>
+                    </a>
+                </div>
+
+                <div class="item">
+                    <button id="toggleSidebar" class="toggle-button">⬅️</button>
+                </div>
+
+                <div class="item">
+                    <a class="link" href="{{ path('app_logout') }}">
+                        ​🎬​<span class="text">EXIT</span>
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a class="link" data-toggle="collapse" href="#menuAdmin">
+                    👥<span class="text">Configuración</span>
+                    </a>
+                    <div id="menuAdmin" class="collapse">
+                        {% if is_granted ('ROLE_SUPER_ADMIN')  %}
+                        <a class="sublink" href="{{ path('app_admin_index') }}">📋<span class="text">Usuarios</span></a>
+                        <a class="sublink" href="{{ path('app_institucion_index') }}">📋<span class="text">Institucion</span></a>
+                        <a class="sublink" href="{{ path('app_resolucion_index') }}">📋<span class="text">Resoluciones</span></a>
+                        <a class="sublink" href="{{ path('app_ciclo_index') }}">📋<span class="text">Ciclos</span></a>
+                        <a class="sublink" href="{{ path('app_asignatura_index') }}">📋<span class="text">Asignaturas</span></a>
+                        <a class="sublink" href="{{ path('app_legajo_index') }}">📋<span class="text">Legajos</span></a>
+                        <a class="sublink" href="{{ path('app_estudiante_index') }}">📋<span class="text">Estudiantes</span></a>
+                        <a class="sublink" href="{{ path('app_estudio_primario_index') }}">📋<span class="text">Estudio Primario</span></a>
+                        <a class="sublink" href="{{ path('app_estudio_secundario_index') }}">📋<span class="text">Estudio Secundario</span></a>
+                        <a class="sublink" href="{{ path('app_libro_matriz_index') }}">📋<span class="text">Libro Matriz</span></a>
+                        <a class="sublink" href="{{ path('app_libro_nota_index') }}">📋<span class="text">Libro Nota</span></a>
+                        <a class="sublink" href="{{ path('app_libro_legajo_index') }}">📋<span class="text">Libro Legajo (documentacion)</span></a>
+                        <a class="sublink" href="{{ path('app_legajo_asignatura_index') }}">📋<span class="text">Legajo Asignatura</span></a>
+                        <a class="sublink" href="{{ path('app_orientada_index') }}">📋<span class="text">Orientada</span></a>
+                        <a class="sublink" href="{{ path('app_legajo_resolucion_index') }}">📋<span class="text">Legajo Resolucion</span></a>
+                        {% endif %} 
+                    </div>
+                </div>
+
+
+            </ul>
+            <div id="page-content">
+                {% block body %}{% endblock %}
+            </div>
+
+            {% block javascripts %}
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        document.querySelectorAll('.link[data-toggle="collapse"]').forEach(link => {
+                            link.addEventListener("click", function (e) {
+                                e.preventDefault();
+                                const target = document.querySelector(this.getAttribute("href"));
+                                if (target) {
+                                    target.classList.toggle("show");
+                                }
+                            });
+                        });
+
+                        document.querySelectorAll('.toggle-collapse').forEach(function (toggle) {
+                            toggle.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                const targetId = this.getAttribute('href');
+                                const target = document.querySelector(targetId);
+                                if (target) {
+                                    target.classList.toggle('show');
+                                }
+                            });
+                        });
+
+                    });
+                </script>
+                <script>
+                    function inicializarToggleSidebar() {
+                        const sidebar = document.getElementById("sidebar");
+                        const toggleBtn = document.getElementById("toggleSidebar");
+
+                        if (sidebar && toggleBtn) {
+                            toggleBtn.addEventListener("click", function () {
+                                sidebar.classList.toggle("collapsed");
+
+                                // Cambiar la flecha según el estado
+                                if (sidebar.classList.contains("collapsed")) {
+                                    toggleBtn.innerText = "➡️";
+                                } else {
+                                    toggleBtn.innerText = "⬅️";
+                                }
+                            });
+                        }
+                    }
+                    inicializarToggleSidebar();
+                </script>		
+            {% endblock %}
+        </div>
+    </body>
+</html>

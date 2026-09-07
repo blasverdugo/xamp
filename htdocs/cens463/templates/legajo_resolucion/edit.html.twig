@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit LegajoResolucion{% endblock %}
+
+{% block body %}
+    <h1>Edit LegajoResolucion</h1>
+
+    {{ include('legajo_resolucion/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_legajo_resolucion_index') }}">back to list</a>
+
+    {{ include('legajo_resolucion/_delete_form.html.twig') }}
+{% endblock %}

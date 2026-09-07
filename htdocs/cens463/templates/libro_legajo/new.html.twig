@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LibroLegajo{% endblock %}
+
+{% block body %}
+    <h1>Create new LibroLegajo</h1>
+
+    {{ include('libro_legajo/_form.html.twig') }}
+
+    <a href="{{ path('app_libro_legajo_index') }}">back to list</a>
+{% endblock %}

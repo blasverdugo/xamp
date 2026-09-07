@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LegajoResolucion index{% endblock %}
+
+{% block body %}
+    <h1>LegajoResolucion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for legajo_resolucion in legajo_resolucions %}
+            <tr>
+                <td>{{ legajo_resolucion.id }}</td>
+                <td>{{ legajo_resolucion.fecha ? legajo_resolucion.fecha|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_legajo_resolucion_show', {'id': legajo_resolucion.id}) }}">show</a>
+                    <a href="{{ path('app_legajo_resolucion_edit', {'id': legajo_resolucion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_legajo_resolucion_new') }}">Create new</a>
+{% endblock %}

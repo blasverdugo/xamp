@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EstudioSecundario index{% endblock %}
+
+{% block body %}
+    <h1>EstudioSecundario index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tomo</th>
+                <th>Folio</th>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Numero</th>
+                <th>Localidad</th>
+                <th>AnioCompleto</th>
+                <th>PlanEstudio</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estudio_secundario in estudio_secundarios %}
+            <tr>
+                <td>{{ estudio_secundario.id }}</td>
+                <td>{{ estudio_secundario.tomo }}</td>
+                <td>{{ estudio_secundario.folio }}</td>
+                <td>{{ estudio_secundario.fecha ? estudio_secundario.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ estudio_secundario.tipo }}</td>
+                <td>{{ estudio_secundario.numero }}</td>
+                <td>{{ estudio_secundario.localidad }}</td>
+                <td>{{ estudio_secundario.anioCompleto }}</td>
+                <td>{{ estudio_secundario.planEstudio }}</td>
+                <td>
+                    <a href="{{ path('app_estudio_secundario_show', {'id': estudio_secundario.id}) }}">show</a>
+                    <a href="{{ path('app_estudio_secundario_edit', {'id': estudio_secundario.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_estudio_secundario_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Resolucion{% endblock %}
+
+{% block body %}
+    <h1>Create new Resolucion</h1>
+
+    {{ include('resolucion/_form.html.twig') }}
+
+    <a href="{{ path('app_resolucion_index') }}">back to list</a>
+{% endblock %}

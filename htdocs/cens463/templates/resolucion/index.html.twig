@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resolucion index{% endblock %}
+
+{% block body %}
+    <h1>Resolucion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for resolucion in resolucions %}
+            <tr>
+                <td>{{ resolucion.id }}</td>
+                <td>{{ resolucion.numero }}</td>
+                <td>
+                    <a href="{{ path('app_resolucion_show', {'id': resolucion.id}) }}">show</a>
+                    <a href="{{ path('app_resolucion_edit', {'id': resolucion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_resolucion_new') }}">Create new</a>
+{% endblock %}
